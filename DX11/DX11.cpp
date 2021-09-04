@@ -130,13 +130,71 @@ void InitDevice()
     
     deviceContext->RSSetViewports(1, &viewPort);
 
+    DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
+    
+    ID3DBlob* vertexBlob; //쉐이더 정보를 들고있음
+    D3DCompileFromFile(L"Shaders/Tutorial.hlsl",
+        NULL, NULL, "VS", "vs_5_0", 
+        flags, NULL, &vertexBlob, NULL );
 
+    device->CreateVertexShader(vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), NULL, &vertexShader);
+
+    D3D11_INPUT_ELEMENT_DESC layouts[] = {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
+
+    UINT layoutSize = ARRAYSIZE(layouts);
+
+    device->CreateInputLayout(layouts, layoutSize,
+        vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), &inputLayout );
+
+    vertexBlob->Release();
+
+    ID3DBlob* pixelBlob;
+    D3DCompileFromFile(L"Shaders/Tutorial.hlsl",
+        NULL, NULL, "PS", "ps_5_0",
+        flags, NULL, &pixelBlob, NULL);
+
+    device->CreatePixelShader(pixelBlob->GetBufferPointer(), pixelBlob->GetBufferSize(), NULL, &pixelShader);
+    pixelBlob->Release();
+
+    Vertex vertices[] = {
+        XMFLOAT3(-0.5f, -0.5f, 0.f),
+        XMFLOAT3(0.5f, 0.5f, 0.f),
+        XMFLOAT3(0.5f, -0.5f, 0.f),
+    };
+
+
+    D3D11_BUFFER_DESC bd = {};
+    bd.Usage = D3D11_USAGE_DEFAULT;
+    bd.ByteWidth = sizeof(vertices);
+    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA initData = {};
+    initData.pSysMem = vertices;
+
+    device->CreateBuffer(&bd, &initData, &vertexBuffer);
+
+    
 }   
 
 void Render()
 {
     float clearColor[4] = { 0.f, 0.125f, 0.3f, 1.0f };
     deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+
+    UINT stride = sizeof(Vertex);
+    UINT offset = 0;
+
+    deviceContext->IASetInputLayout(inputLayout);
+    deviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    deviceContext->VSSetShader(vertexShader, NULL, 0);
+    deviceContext->PSSetShader(pixelShader, NULL, 0);
+
+    deviceContext->Draw(3, 0);
+
     swapChain->Present(0, 0);
 }
 
@@ -146,6 +204,11 @@ void ReleaseDevice()
     deviceContext->Release();
     swapChain->Release();
     renderTargetView->Release();
+
+    vertexShader->Release();
+    pixelShader->Release();
+    inputLayout->Release();
+    vertexBuffer->Release();
 }
 
 //
