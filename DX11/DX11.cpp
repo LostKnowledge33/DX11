@@ -6,8 +6,14 @@
 
 #define MAX_LOADSTRING 100
 
+struct Vertex { //정점 : 3차원 공간에서의 한점
+    XMFLOAT3 position;
+
+};
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HWND hWnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -16,6 +22,20 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+ID3D11Device* device;
+ID3D11DeviceContext* deviceContext;
+IDXGISwapChain* swapChain;
+ID3D11RenderTargetView* renderTargetView;
+
+ID3D11VertexShader* vertexShader;
+ID3D11PixelShader* pixelShader;
+ID3D11InputLayout* inputLayout;
+ID3D11Buffer* vertexBuffer;
+
+void InitDevice();
+void Render();
+void ReleaseDevice();
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -40,22 +60,93 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DX11));
 
-    MSG msg;
+    MSG msg = {};
+
+    InitDevice();
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (WM_QUIT != msg.message)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        else {
+            Render();
+        }
     }
 
+    ReleaseDevice();
     return (int) msg.wParam;
 }
 
 
+void InitDevice()
+{
+    D3D_FEATURE_LEVEL fl = {
+        D3D_FEATURE_LEVEL_11_0,
+    };
+
+    DXGI_SWAP_CHAIN_DESC scd = {};
+    scd.BufferCount = 1;
+    scd.BufferDesc.Width = (UINT)WIN_SIZE_X;
+    scd.BufferDesc.Height = (UINT)WIN_SIZE_Y;
+    scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    scd.BufferDesc.RefreshRate.Numerator = 60;
+    scd.BufferDesc.RefreshRate.Denominator = 1;
+    scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    scd.OutputWindow = hWnd;
+    scd.SampleDesc.Count = 1;
+    scd.SampleDesc.Quality = 0;
+    scd.Windowed = TRUE;
+
+    D3D11CreateDeviceAndSwapChain(
+        NULL, D3D_DRIVER_TYPE_HARDWARE,
+        NULL, D3D11_CREATE_DEVICE_DEBUG,
+        NULL, NULL, D3D11_SDK_VERSION,
+        &scd, &swapChain, &device,
+        NULL, &deviceContext );
+
+    ID3D11Texture2D* backBuffer = NULL;
+    swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+    if (backBuffer == NULL) {
+        ReleaseDevice();
+        return;
+    }
+
+    device->CreateRenderTargetView(backBuffer, NULL, &renderTargetView);
+    backBuffer->Release();
+
+    deviceContext->OMSetRenderTargets(1, &renderTargetView, NULL);
+
+    D3D11_VIEWPORT viewPort;
+    viewPort.Width = (UINT)WIN_SIZE_X;
+    viewPort.Height = (UINT)WIN_SIZE_Y;
+    viewPort.MinDepth = 0.f;
+    viewPort.MaxDepth = 1.f;
+    viewPort.TopLeftX = 0.f;
+    viewPort.TopLeftY = 0.f;
+    
+    deviceContext->RSSetViewports(1, &viewPort);
+
+
+}   
+
+void Render()
+{
+    float clearColor[4] = { 0.f, 0.125f, 0.3f, 1.0f };
+    deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+    swapChain->Present(0, 0);
+}
+
+void ReleaseDevice()
+{
+    device->Release();
+    deviceContext->Release();
+    swapChain->Release();
+    renderTargetView->Release();
+}
 
 //
 //  함수: MyRegisterClass()
@@ -97,8 +188,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   RECT rc = { 0, 0, WIN_SIZE_X, WIN_SIZE_Y };
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+
+   hWnd = CreateWindowW(szWindowClass, szTitle, 
+       WS_OVERLAPPEDWINDOW,
+       WIN_START_X, WIN_START_Y, 
+       rc.right - rc.left, rc.bottom - rc.top, 
+       nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -178,3 +275,4 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+

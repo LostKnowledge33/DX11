@@ -27,6 +27,9 @@
     <ClInclude Include="DX11.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11.cpp">
@@ -45,5 +48,8 @@
     <Image Include="DX11.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\Tutorial.hlsl" />
   </ItemGroup>
 </Project>
