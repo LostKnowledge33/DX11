@@ -6,6 +6,12 @@
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN
 
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+
 #include <windows.h>
 #include <stdlib.h>
 #include <malloc.h>
@@ -22,13 +28,16 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-#ifdef UNICODE
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-#else
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-#endif
-
 //FrameWork Header Files
 #include "Defines.h"
+
 #include "Scenes/Scene.h"
+#include "Scenes/TutorialScene.h"
+
+#include "Framework/Device/Device.h"
+#include "Framework/Shader/VertexShader.h"
+#include "Framework/Shader/PixelShader.h"
+
+#include "Program/Program.h"
+
 
