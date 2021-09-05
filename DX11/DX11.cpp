@@ -1,14 +1,20 @@
 ﻿// DX11.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
-#include "framework.h"
+#include "Framework.h"
 #include "DX11.h"
 
 #define MAX_LOADSTRING 100
 
 struct Vertex { //정점 : 3차원 공간에서의 한점
-    XMFLOAT3 position;
+    Float3 position;
+    Float4 color;
 
+    Vertex(float x, float y, float r, float g, float b)
+    {
+        position = Float3(x, y, 0);
+        color = Float4(r, g, b, 1);
+    }
 };
 
 // 전역 변수:
@@ -32,6 +38,8 @@ ID3D11VertexShader* vertexShader;
 ID3D11PixelShader* pixelShader;
 ID3D11InputLayout* inputLayout;
 ID3D11Buffer* vertexBuffer;
+
+vector<Vertex> vertices;
 
 void InitDevice();
 void Render();
@@ -139,8 +147,10 @@ void InitDevice()
 
     device->CreateVertexShader(vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), NULL, &vertexShader);
 
+    //Set InputLayout
     D3D11_INPUT_ELEMENT_DESC layouts[] = {
-        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
     };
 
     UINT layoutSize = ARRAYSIZE(layouts);
@@ -158,25 +168,39 @@ void InitDevice()
     device->CreatePixelShader(pixelBlob->GetBufferPointer(), pixelBlob->GetBufferSize(), NULL, &pixelShader);
     pixelBlob->Release();
 
+   
+    /*
     Vertex vertices[] = {
-        XMFLOAT3(-0.5f, -0.5f, 0.f),
-        XMFLOAT3(0.5f, 0.5f, 0.f),
-        XMFLOAT3(0.5f, -0.5f, 0.f),
+        Vertex(-0.5f, -0.5f, 1.f, 0.f, 0.f),
+        Vertex(0.5f, 0.5f, 0.f, 1.f, 0.f),
+        Vertex(0.5f, -0.5f, 0.f, 0.f, 1.f)
     };
+    */
 
+    int degree = 1;
+    
+    //vertices.emplace_back(0, 0, 0, 0, 0);
+    for (int i = 0; i < 360 / degree; i++) {
+        float temp = degree * i;
 
+        cout << (float)cosf(XMConvertToRadians(degree * i)) << endl;
+        cout << (float)sinf(XMConvertToRadians(degree * i)) << endl;
+
+        vertices.emplace_back(0, 0, 0, 0, 0);
+        vertices.emplace_back(cosf(XMConvertToRadians(temp + degree)) * 0.5f, sinf(XMConvertToRadians(temp + degree)) * 0.5f, 1, 1, 0);
+        vertices.emplace_back( cosf(XMConvertToRadians(temp)) * 0.5f, sinf(XMConvertToRadians(temp)) * 0.5f, 1, 1, 0 );
+    }
+    
     D3D11_BUFFER_DESC bd = {};
     bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = sizeof(vertices);
+    bd.ByteWidth = sizeof(Vertex) * vertices.size();
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
     D3D11_SUBRESOURCE_DATA initData = {};
-    initData.pSysMem = vertices;
+    initData.pSysMem = vertices.data();
 
     device->CreateBuffer(&bd, &initData, &vertexBuffer);
-
-    
-}   
+}
 
 void Render()
 {
@@ -188,12 +212,15 @@ void Render()
 
     deviceContext->IASetInputLayout(inputLayout);
     deviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+
+    //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+    //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     deviceContext->VSSetShader(vertexShader, NULL, 0);
     deviceContext->PSSetShader(pixelShader, NULL, 0);
 
-    deviceContext->Draw(3, 0);
+    deviceContext->Draw(vertices.size(), 0);
 
     swapChain->Present(0, 0);
 }
@@ -210,7 +237,7 @@ void ReleaseDevice()
     inputLayout->Release();
     vertexBuffer->Release();
 }
-
+ 
 //
 //  함수: MyRegisterClass()
 //
