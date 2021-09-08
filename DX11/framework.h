@@ -20,6 +20,7 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 
 #include <d3d11.h>
 #include <d3dcompiler.h> //Shader
@@ -31,13 +32,23 @@
 //FrameWork Header Files
 #include "Defines.h"
 
-#include "Scenes/Scene.h"
-#include "Scenes/TutorialScene.h"
-
 #include "Framework/Device/Device.h"
 #include "Framework/Shader/VertexShader.h"
 #include "Framework/Shader/PixelShader.h"
 
+#include "Framework/Buffer/VertexBuffer.h"
+#include "Framework/Buffer/VertexLayouts.h"
+#include "Framework/Buffer/ConstBuffer.h"
+#include "Framework/Buffer/GlobalBuffer.h"
+
+#include "Objects/Basic/Rect.h"
+
+#include "Scenes/Scene.h"
+#include "Scenes/TutorialScene.h"
+
 #include "Program/Program.h"
+
+
+
 
 

@@ -3,7 +3,13 @@
 class CTutorialScene : public CScene
 {
 private:
-	vector<Vertex> vertices;
+	CRect* rect;
+
+	CMatrixBuffer* world;
+	CMatrixBuffer* view;
+	CMatrixBuffer* projection;
+
+	XMFLOAT4X4 worldMatrix;
 
 public:
 	CTutorialScene();

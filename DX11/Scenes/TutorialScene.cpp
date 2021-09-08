@@ -2,8 +2,9 @@
 
 CTutorialScene::CTutorialScene()
 {
-    CVertexShader* vs = new CVertexShader(L"Shaders/Tutorial.hlsl", NULL);
-    CPixelShader* ps = new CPixelShader(L"Shaders/Tutorial.hlsl", NULL);
+    /*
+    vs = new CVertexShader(L"Shaders/Tutorial.hlsl", NULL);
+    ps = new CPixelShader(L"Shaders/Tutorial.hlsl", NULL);
 
     int degree = 1;
 
@@ -18,29 +19,51 @@ CTutorialScene::CTutorialScene()
         vertices.emplace_back(cosf(XMConvertToRadians(temp)) * 0.5f, sinf(XMConvertToRadians(temp)) * 0.5f, 1, 1, 0);
     }
 
-    D3D11_BUFFER_DESC bd = {};
-    bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = sizeof(Vertex) * vertices.size();
-    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    vb = new CVertexBuffer((void*)vertices.data(), sizeof(Vertex), vertices.size());
+    */
 
-    D3D11_SUBRESOURCE_DATA initData = {};
-    initData.pSysMem = vertices.data();
+    rect = new CRect(Float2(0, 0), Float2(50, 50));
 
-    CDevice::Get()->GetDevice()->CreateBuffer(&bd, &initData, vs->GetVB());
+    world = new CMatrixBuffer();
+    view = new CMatrixBuffer();
+    projection = new CMatrixBuffer();
+
+    Matrix orthographic = XMMatrixOrthographicOffCenterLH(
+        0.f, WIN_SIZE_X, 
+        WIN_SIZE_Y, 0.f, 
+        -1.f, 1.f);
+
+    projection->Set(orthographic);
+
+    worldMatrix._11 = 1;
+    worldMatrix._22 = 1;
+    worldMatrix._33 = 1;
+    worldMatrix._44 = 1;
 }
 
 CTutorialScene::~CTutorialScene()
 {
+    delete rect;
 
+    delete world;
+    delete view;
+    delete projection;
 }
 
 void CTutorialScene::Update()
 {
+    worldMatrix._41 = mousePos.x;
+    worldMatrix._42 = mousePos.y;
 
+    Matrix temp = XMLoadFloat4x4(&worldMatrix);
+    world->Set(temp);
 }
 
 void CTutorialScene::Render()
 {
-    CDevice::Get()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    CDevice::Get()->GetDeviceContext()->Draw(vertices.size(), 0);
+    world->SetVS(0);
+    view->SetVS(1);
+    projection->SetVS(2);
+
+    rect->Render();
 }

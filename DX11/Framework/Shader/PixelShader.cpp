@@ -4,18 +4,21 @@ CPixelShader::CPixelShader(LPCWSTR psPath, DWORD flags)
 {
     flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
-    ID3DBlob* pixelBlob;
     D3DCompileFromFile(psPath,
         NULL, NULL, "PS", "ps_5_0",
-        flags, NULL, &pixelBlob, NULL);
+        flags, NULL, &blob, NULL);
 
-    CDevice::Get()->GetDevice()->CreatePixelShader(pixelBlob->GetBufferPointer(), pixelBlob->GetBufferSize(), NULL, &pixelShader);
-    pixelBlob->Release();
-
-    CDevice::Get()->GetDeviceContext()->PSSetShader(pixelShader, NULL, 0);
+    DEVICE->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &pixelShader);
 }
 
 CPixelShader::~CPixelShader()
 {
-
+    pixelShader->Release();
+    blob->Release();
 }
+
+void CPixelShader::Set()
+{
+    DC->PSSetShader(pixelShader, NULL, 0);
+}
+

@@ -9,19 +9,17 @@ using namespace DirectX;
 #define WIN_SIZE_X 1920
 #define WIN_SIZE_Y 1080
 
+#define WIN_CENTER_X (WIN_SIZE_X * 0.5f) 
+#define WIN_CENTER_Y (WIN_SIZE_Y * 0.5f)
+
+#define DEVICE CDevice::Get()->GetDevice()
+#define DC CDevice::Get()->GetDeviceContext()
+
 typedef XMFLOAT4 Float4;
 typedef XMFLOAT3 Float3;
 typedef XMFLOAT2 Float2;
 
+typedef XMMATRIX Matrix;
+
 extern HWND hWnd;
-
-struct Vertex { //정점 : 3차원 공간에서의 한점
-    Float3 position;
-    Float4 color;
-
-    Vertex(float x, float y, float r, float g, float b)
-    {
-        position = Float3(x, y, 0);
-        color = Float4(r, g, b, 1);
-    }
-};
+extern Float2 mousePos;

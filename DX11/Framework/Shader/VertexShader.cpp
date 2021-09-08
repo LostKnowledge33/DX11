@@ -4,12 +4,12 @@ CVertexShader::CVertexShader(LPCWSTR vsPath, DWORD flags)
 {
     flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
-    ID3DBlob* vertexBlob; //쉐이더 정보를 들고있음
+    //쉐이더 정보를 들고있음
     D3DCompileFromFile(vsPath,
         NULL, NULL, "VS", "vs_5_0",
-        flags, NULL, &vertexBlob, NULL);
+        flags, NULL, &blob, NULL);
 
-    CDevice::Get()->GetDevice()->CreateVertexShader(vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), NULL, &vertexShader);
+    DEVICE->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &vertexShader);
 
     //Set InputLayout
     D3D11_INPUT_ELEMENT_DESC layouts[] = {
@@ -19,20 +19,18 @@ CVertexShader::CVertexShader(LPCWSTR vsPath, DWORD flags)
 
     UINT layoutSize = ARRAYSIZE(layouts);
 
-    CDevice::Get()->GetDevice()->CreateInputLayout(layouts, layoutSize,
-        vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), &inputLayout);
-
-    vertexBlob->Release();
-
-    UINT stride = sizeof(Vertex);
-    UINT offset = 0;
-
-    CDevice::Get()->GetDeviceContext()->IASetInputLayout(inputLayout);
-    CDevice::Get()->GetDeviceContext()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-
-    CDevice::Get()->GetDeviceContext()->VSSetShader(vertexShader, NULL, 0);
+    DEVICE->CreateInputLayout(layouts, layoutSize,
+        blob->GetBufferPointer(), blob->GetBufferSize(), &inputLayout);
 }
 
 CVertexShader::~CVertexShader()
 {
+    vertexShader->Release();
+    blob->Release();
+}
+
+void CVertexShader::Set()
+{
+    DC->IASetInputLayout(inputLayout);
+    DC->VSSetShader(vertexShader, NULL, 0);
 }
