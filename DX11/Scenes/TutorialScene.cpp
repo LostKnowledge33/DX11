@@ -1,4 +1,5 @@
 #include "Framework.h"
+#include "TutorialScene.h"
 
 CTutorialScene::CTutorialScene()
 {
@@ -22,32 +23,33 @@ CTutorialScene::CTutorialScene()
     vb = new CVertexBuffer((void*)vertices.data(), sizeof(Vertex), vertices.size());
     */
 
-    rect = new CRect(Float2(0, 0), Float2(50, 50));
+    rect = new CRect(Float2(0, 0), Float2(50, 100));
+    rect2 = new CRect(Float2(0, 0), Float2(100, 50));
 
     world = new CMatrixBuffer();
-    view = new CMatrixBuffer();
-    projection = new CMatrixBuffer();
-
-    Matrix orthographic = XMMatrixOrthographicOffCenterLH(
-        0.f, WIN_SIZE_X, 
-        WIN_SIZE_Y, 0.f, 
-        -1.f, 1.f);
-
-    projection->Set(orthographic);
 
     worldMatrix._11 = 1;
     worldMatrix._22 = 1;
     worldMatrix._33 = 1;
     worldMatrix._44 = 1;
+
+    worldMatrix2._11 = 1;
+    worldMatrix2._22 = 1;
+    worldMatrix2._33 = 1;
+    worldMatrix2._44 = 1;
+
+    viewMatrix._11 = 1;
+    viewMatrix._22 = 1;
+    viewMatrix._33 = 1;
+    viewMatrix._44 = 1;
 }
 
 CTutorialScene::~CTutorialScene()
 {
     delete rect;
+    delete rect2;
 
     delete world;
-    delete view;
-    delete projection;
 }
 
 void CTutorialScene::Update()
@@ -55,15 +57,37 @@ void CTutorialScene::Update()
     worldMatrix._41 = mousePos.x;
     worldMatrix._42 = mousePos.y;
 
-    Matrix temp = XMLoadFloat4x4(&worldMatrix);
-    world->Set(temp);
+    if (GetAsyncKeyState(VK_RIGHT))
+        worldMatrix2._41 += 0.1f;
+    if (GetAsyncKeyState(VK_LEFT))
+        worldMatrix2._41 -= 0.1f;
+    if (GetAsyncKeyState(VK_UP))
+        worldMatrix2._42 -= 0.1f;
+    if (GetAsyncKeyState(VK_DOWN))
+        worldMatrix2._42 += 0.1f;
+
+    if (GetAsyncKeyState('D'))
+        viewMatrix._41 -= 0.1f;
+    if (GetAsyncKeyState('A'))
+        viewMatrix._41 += 0.1f;
+    if (GetAsyncKeyState('W'))
+        viewMatrix._42 += 0.1f;
+    if (GetAsyncKeyState('S'))
+        viewMatrix._42 -= 0.1f;
 }
 
 void CTutorialScene::Render()
 {
+    Matrix temp = XMLoadFloat4x4(&worldMatrix);
+    world->Set(temp);
+
     world->SetVS(0);
-    view->SetVS(1);
-    projection->SetVS(2);
 
     rect->Render();
+
+    temp = XMLoadFloat4x4(&worldMatrix2);
+    world->Set(temp);
+    world->SetVS(0);
+
+    rect2->Render();
 }

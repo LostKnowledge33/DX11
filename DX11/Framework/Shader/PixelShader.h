@@ -7,7 +7,7 @@ private:
 	ID3DBlob* blob;
 
 public:
-	CPixelShader(LPCWSTR psPath, DWORD flags);
+	CPixelShader(wstring psPath, DWORD flags);
 	~CPixelShader();
 
 	void Set();

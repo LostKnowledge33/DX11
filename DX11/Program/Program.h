@@ -5,6 +5,8 @@ class CProgram
 private:
 	CScene* scene;
 
+	CMatrixBuffer* view;
+	CMatrixBuffer* projection;
 public:
 	CProgram();
 	~CProgram();
@@ -14,4 +16,7 @@ public:
 
 	void Create();
 	void Delete();
+
+private:
+	void CreateProjection();
 };

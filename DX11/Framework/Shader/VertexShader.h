@@ -10,7 +10,7 @@ private:
 	ID3DBlob* blob;
 
 public:
-	CVertexShader(LPCWSTR vsPath, DWORD flags);
+	CVertexShader(wstring vsPath, DWORD flags);
 	~CVertexShader();
 
 	void Set();

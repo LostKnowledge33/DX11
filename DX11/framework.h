@@ -29,8 +29,13 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+#include "../DirectXTex/DirectXTex.h"
+
 //FrameWork Header Files
 #include "Defines.h"
+
+#include "Framework/Math/Vector2.h"
+#include "Framework/Math/Transform.h"
 
 #include "Framework/Device/Device.h"
 #include "Framework/Shader/VertexShader.h"
@@ -42,9 +47,9 @@
 #include "Framework/Buffer/GlobalBuffer.h"
 
 #include "Objects/Basic/Rect.h"
+#include "Objects/Basic/Planet.h"
 
 #include "Scenes/Scene.h"
-#include "Scenes/TutorialScene.h"
 
 #include "Program/Program.h"
 

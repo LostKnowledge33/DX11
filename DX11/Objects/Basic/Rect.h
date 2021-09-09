@@ -1,6 +1,6 @@
 #pragma once
 
-class CRect{
+class CRect {
 private:
 	vector<Vertex> vertices;
 
@@ -8,8 +8,13 @@ private:
 	CPixelShader* ps;
 	CVertexBuffer* vb;
 
+	ID3D11ShaderResourceView* srv;
+	ID3D11SamplerState* samplerState;
+
 public:
-	CRect(Float2 pos, Float2 size);
+	CRect(Float2 pos, Float2 size, 
+		wstring vsPath = L"Shaders/VertexShader/VertexColor.hlsl", 
+		wstring psPath = L"Shaders/PixelShader/PixelColor.hlsl" );
 	~CRect();
 
 	void Render();

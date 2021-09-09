@@ -1,10 +1,10 @@
 #include "Framework.h"
 
-CPixelShader::CPixelShader(LPCWSTR psPath, DWORD flags)
+CPixelShader::CPixelShader(wstring psPath, DWORD flags)
 {
     flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
-    D3DCompileFromFile(psPath,
+    D3DCompileFromFile(psPath.c_str(),
         NULL, NULL, "PS", "ps_5_0",
         flags, NULL, &blob, NULL);
 
