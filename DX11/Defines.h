@@ -15,6 +15,10 @@ using namespace DirectX;
 #define DEVICE CDevice::Get()->GetDevice()
 #define DC CDevice::Get()->GetDeviceContext()
 
+#define KEY_DOWN(k) CControl::Get()->Down(k)
+#define KEY_UP(k) CControl::Get()->Up(k)
+#define KEY_PRESS(k) CControl::Get()->Press(k)
+
 typedef XMFLOAT4 Float4;
 typedef XMFLOAT3 Float3;
 typedef XMFLOAT2 Float2;

@@ -160,6 +160,9 @@
     <ClInclude Include="Framework\Shader\PixelShader.h" />
     <ClInclude Include="Framework\Shader\VertexShader.h" />
     <ClInclude Include="Framework\Math\Transform.h" />
+    <ClInclude Include="Framework\Utillity\Control.h" />
+    <ClInclude Include="Framework\Utillity\Singleton.h" />
+    <ClInclude Include="Framework\Utillity\Timer.h" />
     <ClInclude Include="Objects\Basic\Planet.h" />
     <ClInclude Include="Objects\Basic\Rect.h" />
     <ClInclude Include="Program\Program.h" />
@@ -181,6 +184,7 @@
     <ClCompile Include="Framework\Shader\PixelShader.cpp" />
     <ClCompile Include="Framework\Shader\VertexShader.cpp" />
     <ClCompile Include="Framework\Math\Transform.cpp" />
+    <ClCompile Include="Framework\Utillity\Control.cpp" />
     <ClCompile Include="Objects\Basic\Planet.cpp" />
     <ClCompile Include="Objects\Basic\Rect.cpp" />
     <ClCompile Include="Program\Program.cpp" />

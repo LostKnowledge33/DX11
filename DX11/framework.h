@@ -37,6 +37,10 @@
 #include "Framework/Math/Vector2.h"
 #include "Framework/Math/Transform.h"
 
+#include "Framework/Utillity/Singleton.h"
+#include "Framework/Utillity/Control.h"
+#include "Framework/Utillity/Timer.h"
+
 #include "Framework/Device/Device.h"
 #include "Framework/Shader/VertexShader.h"
 #include "Framework/Shader/PixelShader.h"

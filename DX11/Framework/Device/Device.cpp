@@ -1,7 +1,5 @@
 #include "Framework.h"
 
-CDevice* CDevice::instance = NULL;
-
 CDevice::CDevice()
 {
 	CreateDeviceAndSwapChain();

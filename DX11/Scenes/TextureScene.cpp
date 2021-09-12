@@ -20,7 +20,7 @@ CTextureScene::~CTextureScene()
 
 void CTextureScene::Update()
 {
-
+	if(KEY_PRESS)
 }
 
 void CTextureScene::Render()
