@@ -2,12 +2,12 @@
 
 class CTextureScene : public CScene {
 private:
-	CRect* rect;
+	CPlane* plane;
+
+	CTransform* transform;
 
 	CMatrixBuffer* worldBuffer;
 	CColorBuffer* colorBuffer;
-
-	Matrix world;
 
 public:
 	CTextureScene();
