@@ -22,6 +22,6 @@ public:
 	
 	void UpdateWorld();
 	void SetParent(Matrix* matrix) { parent = matrix; }
-	Matrix& getWorld() { return matrix; }
+	Matrix& GetWorld() { return matrix; }
 
 };

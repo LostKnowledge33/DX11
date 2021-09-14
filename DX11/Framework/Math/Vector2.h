@@ -8,5 +8,6 @@ public:
 	Vector2(float x, float y);
 	Vector2(Float2 value);
 
-	
+	Vector2 operator+ (const Vector2& value) const;
+	Vector2 operator- (const Vector2& value) const;
 };

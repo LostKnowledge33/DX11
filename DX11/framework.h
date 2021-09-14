@@ -32,6 +32,7 @@
 #include "../DirectXTex/DirectXTex.h"
 
 //FrameWork Header Files
+
 #include "Defines.h"
 
 #include "Framework/Math/Vector2.h"
@@ -59,7 +60,6 @@
 #include "Scenes/Scene.h"
 
 #include "Program/Program.h"
-
 
 
 

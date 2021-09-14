@@ -7,8 +7,8 @@ CSolarSystemScene::CSolarSystemScene()
 	earth = new CPlanet(Float2(0, 0), Float2(0.5f, 0.5f), 0, Float4(0, 0, 1, 1));
 	moon = new CPlanet(Float2(0, 0), Float2(0.25f, 0.25f), 0, Float4(0.3f, 0.3f, 0.3f, 1));
 
-	earth->SetParent(&sun->getWorld());
-	moon->SetParent(&earth->getWorld());
+	earth->SetParent(&sun->GetWorld());
+	moon->SetParent(&earth->GetWorld());
 
 	sun->position.x = WIN_CENTER_X;
 	sun->position.y = WIN_CENTER_Y;

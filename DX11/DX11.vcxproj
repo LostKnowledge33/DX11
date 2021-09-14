@@ -188,6 +188,7 @@
     <ClCompile Include="Framework\Math\Transform.cpp" />
     <ClCompile Include="Framework\Utillity\Control.cpp" />
     <ClCompile Include="Framework\Texture.cpp" />
+    <ClCompile Include="Framework\Utillity\Timer.cpp" />
     <ClCompile Include="Objects\Basic\Plane.cpp" />
     <ClCompile Include="Objects\Basic\Planet.cpp" />
     <ClCompile Include="Objects\Basic\Rect.cpp" />
