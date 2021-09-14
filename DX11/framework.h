@@ -50,8 +50,11 @@
 #include "Framework/Buffer/ConstBuffer.h"
 #include "Framework/Buffer/GlobalBuffer.h"
 
+#include "Framework/Texture.h"
+
 #include "Objects/Basic/Rect.h"
 #include "Objects/Basic/Planet.h"
+#include "Objects/Basic/Plane.h"
 
 #include "Scenes/Scene.h"
 

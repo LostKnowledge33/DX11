@@ -81,6 +81,12 @@
     <ClInclude Include="Scenes\TextureScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Basic\Plane.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Texture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="Framework\Utillity\Control.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -138,9 +144,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\TextureScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\Utillity\Control.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
