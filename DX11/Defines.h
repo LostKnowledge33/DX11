@@ -1,5 +1,7 @@
 #pragma once
 
+class Vector2;
+
 using namespace std;
 using namespace DirectX;
 
@@ -19,6 +21,8 @@ using namespace DirectX;
 #define KEY_UP(k) CControl::Get()->Up(k)
 #define KEY_PRESS(k) CControl::Get()->Press(k)
 
+#define DELTA CTimer::Get()->GetDeltaTime();
+
 typedef XMFLOAT4 Float4;
 typedef XMFLOAT3 Float3;
 typedef XMFLOAT2 Float2;
@@ -26,4 +30,4 @@ typedef XMFLOAT2 Float2;
 typedef XMMATRIX Matrix;
 
 extern HWND hWnd;
-extern Float2 mousePos;
+extern Vector2 mousePos;

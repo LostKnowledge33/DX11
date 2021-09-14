@@ -23,6 +23,7 @@ CProgram::~CProgram()
 void CProgram::Update()
 {
 	CControl::Get()->Update();
+	CTimer::Get()->Update();
 
 	scene->Update();
 }
@@ -39,6 +40,7 @@ void CProgram::Create()
 {
 	CDevice::Get();
 	CControl::Get();
+	CTimer::Get();
 	
 	CreateProjection();
 }
@@ -47,6 +49,7 @@ void CProgram::Delete()
 {
 	CDevice::Delete();
 	CControl::Delete();
+	CTimer::Delete();
 
 	delete view;
 	delete projection;

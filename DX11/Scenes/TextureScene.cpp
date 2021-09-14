@@ -14,8 +14,6 @@ CTextureScene::CTextureScene()
 
 	transform->position.x = 500.f;
 	transform->position.y = 500.f;
-
-
 }
 
 CTextureScene::~CTextureScene()
@@ -25,26 +23,25 @@ CTextureScene::~CTextureScene()
 
 void CTextureScene::Update()
 {
-	if(KEY_PRESS)
-	if (GetAsyncKeyState('D'))
-		transform->position.x += 0.05f;
-	if (GetAsyncKeyState('A'))
-		transform->position.x -= 0.05f;
-	if (GetAsyncKeyState('W'))
-		transform->position.y -= 0.05f;
-	if (GetAsyncKeyState('S'))
-		transform->position.y += 0.05f;
+	if (KEY_PRESS('D'))
+		transform->position.x += speed * DELTA;
+	if (KEY_PRESS('A'))
+		transform->position.x -= speed * DELTA;
+	if (KEY_PRESS('W'))
+		transform->position.y -= speed * DELTA;
+	if (KEY_PRESS('S'))
+		transform->position.y += speed * DELTA;
 
-	float angle = atan2(mousePos.y - transform->position.y, mousePos.x - transform->position.x);
+	Vector2 direction = mousePos - transform->position;
 
-	transform->rotation.z = angle;
+	transform->rotation.z = atan2(direction.y, direction.x);
 
 	transform->UpdateWorld();
 }
 
 void CTextureScene::Render()
 {
-	worldBuffer->Set(transform->getWorld());
+	worldBuffer->Set(transform->GetWorld());
 	worldBuffer->SetVS(0);
 
 	colorBuffer->SetPS(0);

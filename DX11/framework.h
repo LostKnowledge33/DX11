@@ -32,6 +32,7 @@
 #include "../DirectXTex/DirectXTex.h"
 
 //FrameWork Header Files
+
 #include "Defines.h"
 
 #include "Framework/Math/Vector2.h"
@@ -55,11 +56,11 @@
 #include "Objects/Basic/Rect.h"
 #include "Objects/Basic/Planet.h"
 #include "Objects/Basic/Plane.h"
+#include "Objects/Basic/Missile.h"
 
 #include "Scenes/Scene.h"
 
 #include "Program/Program.h"
-
 
 
 

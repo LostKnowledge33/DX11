@@ -9,6 +9,8 @@ private:
 	CMatrixBuffer* worldBuffer;
 	CColorBuffer* colorBuffer;
 
+	float speed = 100;
+
 public:
 	CTextureScene();
 	~CTextureScene();

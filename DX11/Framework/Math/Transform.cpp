@@ -4,7 +4,6 @@ CTransform::CTransform()
 	: scale(1, 1), parent(NULL)
 {
 	matrix = XMMatrixIdentity();
-
 }
 
 void CTransform::UpdateWorld()
