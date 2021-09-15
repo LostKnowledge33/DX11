@@ -1,18 +1,22 @@
 #include "Framework.h"
 #include "Missile.h"
 
-CMissile::CMissile(Float2 position, Float2 size, Float4 color, Vector2 direction)
+CMissile::CMissile(Float2 position, Float2 size, Float4 color, Vector2 direction, float angle)
 	: direction(direction)
 {
 	texture = new CTexture(L"Textures/missile.png");
 
-	rect = new CRect(position, Float2(size.x, size.y),
+	rect = new CRect(Float2(0, 0), Float2(size.x, size.y),
 		L"Shaders/VertexShader/VertexUV.hlsl", L"Shaders/PixelShader/PixelUV.hlsl");
 
 	worldBuffer = new CMatrixBuffer();
 	colorBuffer = new CColorBuffer();
 
 	colorBuffer->Set(color);
+
+	this->position = position;
+	
+	rotation.z = angle;
 }
 
 CMissile::~CMissile()

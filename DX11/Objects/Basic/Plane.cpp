@@ -5,13 +5,15 @@ CPlane::CPlane(Float2 position, Float2 size, Float4 color)
 {
 	texture = new CTexture(L"Textures/airplane.png");
 	
-	rect = new CRect(position, Float2(size.x, size.y),
+	rect = new CRect(Float2(0, 0), Float2(size.x, size.y),
 		L"Shaders/VertexShader/VertexUV.hlsl", L"Shaders/PixelShader/PixelUV.hlsl");
 
 	worldBuffer = new CMatrixBuffer();
 	colorBuffer = new CColorBuffer();
 
 	colorBuffer->Set(color);
+
+	this->position = position;
 }
 
 CPlane::~CPlane()
@@ -36,7 +38,7 @@ void CPlane::Update()
 	rotation.z = atan2(direction.y, direction.x);
 
 	if (KEY_DOWN(VK_LBUTTON)) {
-		missiles.emplace_back(new CMissile(Float2(position.x, position.y), Float2(50, 20), Float4(1, 1, 1, 1), direction));
+		missiles.emplace_back(new CMissile(Float2(position.x, position.y), Float2(50, 20), Float4(1, 1, 1, 1), direction, rotation.z));
 	}
 
 	for (int i = 0; i < missiles.size(); i++) {

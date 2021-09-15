@@ -3,7 +3,7 @@
 
 CTextureScene::CTextureScene()
 {
-	plane = new CPlane(Float2(0, 0), Float2(50, 50), Float4(1, 1, 1, 1));
+	plane = new CPlane(Float2(300, 300), Float2(50, 50), Float4(1, 1, 1, 1));
 }
 
 CTextureScene::~CTextureScene()
