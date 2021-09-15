@@ -8,7 +8,6 @@ private:
 
 	CMatrixBuffer* world;
 
-
 	XMFLOAT4X4 worldMatrix;
 	XMFLOAT4X4 worldMatrix2;
 

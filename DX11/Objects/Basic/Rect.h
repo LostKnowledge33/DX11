@@ -8,9 +8,6 @@ private:
 	CPixelShader* ps;
 	CVertexBuffer* vb;
 
-	ID3D11ShaderResourceView* srv;
-	ID3D11SamplerState* samplerState;
-
 public:
 	CRect(Float2 pos, Float2 size, 
 		wstring vsPath = L"Shaders/VertexShader/VertexColor.hlsl", 

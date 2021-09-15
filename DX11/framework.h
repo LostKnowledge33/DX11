@@ -21,6 +21,9 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <map>
+
+#include <algorithm>
 
 #include <d3d11.h>
 #include <d3dcompiler.h> //Shader
@@ -41,6 +44,7 @@
 #include "Framework/Utillity/Singleton.h"
 #include "Framework/Utillity/Control.h"
 #include "Framework/Utillity/Timer.h"
+#include "Framework/Utillity/Manager.h"
 
 #include "Framework/Device/Device.h"
 #include "Framework/Shader/VertexShader.h"
@@ -55,8 +59,8 @@
 
 #include "Objects/Basic/Rect.h"
 #include "Objects/Basic/Planet.h"
-#include "Objects/Basic/Plane.h"
 #include "Objects/Basic/Missile.h"
+#include "Objects/Basic/Plane.h"
 
 #include "Scenes/Scene.h"
 

@@ -2,7 +2,7 @@
 
 CVertexShader::CVertexShader(wstring vsPath, DWORD flags)
 {
-    flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
+    //flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
     //쉐이더 정보를 들고있음
     D3DCompileFromFile(vsPath.c_str(),

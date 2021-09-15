@@ -1,12 +1,21 @@
 #pragma once
 
-class CPlane : public CRect {
+class CPlane : public CTransform {
 private:
 	CTexture* texture;
+	CRect* rect;
+
+	CMatrixBuffer* worldBuffer;
+	CColorBuffer* colorBuffer;
+
+	vector<CMissile*> missiles;
+
+	float speed = 100.f;
 
 public:
-	CPlane(Float2 pos, Float2 size, wstring vsPath, wstring psPath);
+	CPlane(Float2 position, Float2 scale, Float4 color);
 	~CPlane();
 
+	void Update();
 	void Render();
 };
