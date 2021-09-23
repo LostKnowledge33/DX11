@@ -3,6 +3,7 @@
 #include "Scenes/SRTScene.h"
 #include "Scenes/SolarSystemScene.h"
 #include "Scenes/TextureScene.h"
+#include "Scenes/PlaneScene.h"
 
 CProgram::CProgram()
 {
@@ -12,6 +13,7 @@ CProgram::CProgram()
 	//scene = new CSRTScene();
 	//scene = new CSolarSystemScene();
 	scene = new CTextureScene();
+	//scene = new CPlaneScene();
 }
 
 CProgram::~CProgram()
@@ -31,6 +33,7 @@ void CProgram::Update()
 void CProgram::Render()
 {
 	CDevice::Get()->Clear();
+	
 	scene->Render();
 
 	CDevice::Get()->Present();
@@ -43,6 +46,7 @@ void CProgram::Create()
 	CTimer::Get();
 	
 	CreateProjection();
+	CreateSamplerState();
 }
 
 void CProgram::Delete()
@@ -50,9 +54,12 @@ void CProgram::Delete()
 	CDevice::Delete();
 	CControl::Delete();
 	CTimer::Delete();
+	CTexture::Delete();
 
 	delete view;
 	delete projection;
+
+	samplerState->Release();
 }
 
 void CProgram::CreateProjection() {
@@ -68,4 +75,20 @@ void CProgram::CreateProjection() {
 
 	view->SetVS(1);
 	projection->SetVS(2);
+}
+
+void CProgram::CreateSamplerState()
+{
+	D3D11_SAMPLER_DESC sd = {};
+	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sd.MinLOD = 0;
+	sd.MaxLOD = D3D11_FLOAT32_MAX;
+
+	DEVICE->CreateSamplerState(&sd, &samplerState);
+
+	DC->PSSetSamplers(0, 1, &samplerState);
 }

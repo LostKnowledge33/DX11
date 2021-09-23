@@ -151,6 +151,7 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Framework\Buffer\ConstBuffer.h" />
     <ClInclude Include="Framework\Buffer\GlobalBuffer.h" />
+    <ClInclude Include="Framework\Buffer\IndexBuffer.h" />
     <ClInclude Include="Framework\Buffer\VertexBuffer.h" />
     <ClInclude Include="Framework\Buffer\VertexLayouts.h" />
     <ClInclude Include="Framework\Device\Device.h" />
@@ -164,13 +165,14 @@
     <ClInclude Include="Framework\Utillity\Manager.h" />
     <ClInclude Include="Framework\Utillity\Singleton.h" />
     <ClInclude Include="Framework\Utillity\Timer.h" />
-    <ClInclude Include="Framework\Texture.h" />
+    <ClInclude Include="Framework\Render\Texture.h" />
     <ClInclude Include="Objects\Basic\Missile.h" />
     <ClInclude Include="Objects\Basic\Plane.h" />
     <ClInclude Include="Objects\Basic\Planet.h" />
-    <ClInclude Include="Objects\Basic\Rect.h" />
+    <ClInclude Include="Objects\Basic\Quad.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scenes\PlaneScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SolarSystemScene.h" />
     <ClInclude Include="Scenes\SRTScene.h" />
@@ -180,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Buffer\ConstBuffer.cpp" />
+    <ClCompile Include="Framework\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="Framework\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
     <ClCompile Include="DX11.cpp" />
@@ -189,14 +192,15 @@
     <ClCompile Include="Framework\Shader\VertexShader.cpp" />
     <ClCompile Include="Framework\Math\Transform.cpp" />
     <ClCompile Include="Framework\Utillity\Control.cpp" />
-    <ClCompile Include="Framework\Texture.cpp" />
+    <ClCompile Include="Framework\Render\Texture.cpp" />
     <ClCompile Include="Framework\Utillity\Manager.cpp" />
     <ClCompile Include="Framework\Utillity\Timer.cpp" />
     <ClCompile Include="Objects\Basic\Missile.cpp" />
     <ClCompile Include="Objects\Basic\Plane.cpp" />
     <ClCompile Include="Objects\Basic\Planet.cpp" />
-    <ClCompile Include="Objects\Basic\Rect.cpp" />
+    <ClCompile Include="Objects\Basic\Quad.cpp" />
     <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Scenes\PlaneScene.cpp" />
     <ClCompile Include="Scenes\SolarSystemScene.cpp" />
     <ClCompile Include="Scenes\SRTScene.cpp" />
     <ClCompile Include="Scenes\TextureScene.cpp" />
@@ -248,6 +252,9 @@
   <ItemGroup>
     <ProjectReference Include="..\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\IMGUI\IMGUI.vcxproj">
+      <Project>{214a991a-4c39-4a85-b545-4d1d77753a0f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

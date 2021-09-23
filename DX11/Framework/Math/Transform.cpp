@@ -18,4 +18,9 @@ void CTransform::UpdateWorld()
 
 	if (parent != NULL)
 		matrix *= *parent;
+
+	XMStoreFloat4x4(&matWorld, matrix);
+	right = Vector2(matWorld._11, matWorld._12);
+	up = Vector2(matWorld._21, matWorld._22);
+
 }

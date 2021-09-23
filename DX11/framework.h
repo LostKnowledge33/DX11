@@ -33,6 +33,9 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 #include "../DirectXTex/DirectXTex.h"
+#include "../IMGUI/imgui.h"
+#include "../IMGUI/imgui_impl_dx11.h"
+#include "../IMGUI/imgui_impl_win32.h"
 
 //FrameWork Header Files
 
@@ -51,13 +54,14 @@
 #include "Framework/Shader/PixelShader.h"
 
 #include "Framework/Buffer/VertexBuffer.h"
+#include "Framework/Buffer/IndexBuffer.h"
 #include "Framework/Buffer/VertexLayouts.h"
 #include "Framework/Buffer/ConstBuffer.h"
 #include "Framework/Buffer/GlobalBuffer.h"
 
-#include "Framework/Texture.h"
+#include "Framework/Render/Texture.h"
 
-#include "Objects/Basic/Rect.h"
+#include "Objects/Basic/Quad.h"
 #include "Objects/Basic/Planet.h"
 #include "Objects/Basic/Missile.h"
 #include "Objects/Basic/Plane.h"

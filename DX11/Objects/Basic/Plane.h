@@ -13,7 +13,7 @@ private:
 	float speed = 100.f;
 
 public:
-	CPlane(Float2 position, Float2 scale, Float4 color);
+	CPlane(Float2 position, Float4 color);
 	~CPlane();
 
 	void Update();

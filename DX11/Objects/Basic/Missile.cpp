@@ -4,7 +4,7 @@
 CMissile::CMissile(Float2 position, Float2 size, Float4 color, Vector2 direction, float angle)
 	: direction(direction)
 {
-	texture = new CTexture(L"Textures/missile.png");
+	texture = CTexture::Add(L"Textures/missile.png");
 
 	rect = new CRect(Float2(0, 0), Float2(size.x, size.y),
 		L"Shaders/VertexShader/VertexUV.hlsl", L"Shaders/PixelShader/PixelUV.hlsl");

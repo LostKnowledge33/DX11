@@ -7,6 +7,9 @@ private:
 
 	CMatrixBuffer* view;
 	CMatrixBuffer* projection;
+
+	ID3D11SamplerState* samplerState;
+
 public:
 	CProgram();
 	~CProgram();
@@ -19,4 +22,5 @@ public:
 
 private:
 	void CreateProjection();
+	void CreateSamplerState();
 };

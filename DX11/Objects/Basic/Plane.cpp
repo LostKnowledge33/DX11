@@ -1,10 +1,11 @@
 #include "Framework.h"
 #include "Plane.h"
 
-CPlane::CPlane(Float2 position, Float2 size, Float4 color)
+CPlane::CPlane(Float2 position, Float4 color)
 {
-	texture = new CTexture(L"Textures/airplane.png");
-	
+	texture = CTexture::Add(L"Textures/airplane.png");
+	Vector2 size = texture->GetSize();
+
 	rect = new CRect(Float2(0, 0), Float2(size.x, size.y),
 		L"Shaders/VertexShader/VertexUV.hlsl", L"Shaders/PixelShader/PixelUV.hlsl");
 
@@ -25,17 +26,16 @@ CPlane::~CPlane()
 void CPlane::Update()
 {
 	if (KEY_PRESS('D'))
-		position.x += speed * DELTA;
+		rotation.z += DELTA;
 	if (KEY_PRESS('A'))
-		position.x -= speed * DELTA;
+		rotation.z -= DELTA;
 	if (KEY_PRESS('W'))
-		position.y -= speed * DELTA;
+		position += Right() * speed * DELTA;
 	if (KEY_PRESS('S'))
-		position.y += speed * DELTA;
+		position += Left() * speed * DELTA;
 
 	Vector2 direction = mousePos - position;
-
-	rotation.z = atan2(direction.y, direction.x);
+	//rotation.z = atan2(direction.y, direction.x);
 
 	if (KEY_DOWN(VK_LBUTTON)) {
 		missiles.emplace_back(new CMissile(Float2(position.x, position.y), Float2(50, 20), Float4(1, 1, 1, 1), direction, rotation.z));
@@ -62,4 +62,5 @@ void CPlane::Render()
 	for (int i = 0; i < missiles.size(); i++) {
 		missiles[i]->Render();
 	}
+
 }

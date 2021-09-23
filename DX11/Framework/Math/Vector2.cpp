@@ -27,3 +27,57 @@ Vector2 Vector2::operator-(const Vector2& value) const
 {
 	return Vector2(x - value.x, y - value.y);
 }
+
+Vector2 Vector2::operator*(const float& value) const
+{
+	return Vector2(x * value, y * value);
+}
+
+Vector2 Vector2::operator/(const float& value) const
+{
+	return Vector2(x / value, y / value);
+}
+
+void Vector2::operator+=(const Vector2& value)
+{
+	x += value.x;
+	y += value.y;
+}
+
+void Vector2::operator-=(const Vector2& value)
+{
+	x -= value.x;
+	y -= value.y;
+}
+
+void Vector2::operator*=(const float& value)
+{
+	x *= value;
+	y *= value;
+}
+
+void Vector2::operator/=(const float& value)
+{
+	x /= value;
+	y /= value;
+}
+
+float Vector2::Length() const
+{
+	return sqrt(x * x + y * y);
+}
+
+void Vector2::Normalize()
+{
+	float length = Length();
+
+	x /= length;
+	y /= length;
+}
+
+Vector2 Vector2::Normalized() const
+{
+	float length = Length();
+
+	return Vector2(x / length, y / length);
+}
