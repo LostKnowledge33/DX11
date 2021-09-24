@@ -1,26 +1,15 @@
 #include "Framework.h"
 #include "Plane.h"
 
-CPlane::CPlane(Float2 position, Float4 color)
+CPlane::CPlane(Float2 position, Vector2 scale)
+	: CQuad(L"Textures/airplane.png", scale)
 {
-	texture = CTexture::Add(L"Textures/airplane.png");
-	Vector2 size = texture->GetSize();
-
-	rect = new CRect(Float2(0, 0), Float2(size.x, size.y),
-		L"Shaders/VertexShader/VertexUV.hlsl", L"Shaders/PixelShader/PixelUV.hlsl");
-
-	worldBuffer = new CMatrixBuffer();
-	colorBuffer = new CColorBuffer();
-
-	colorBuffer->Set(color);
-
 	this->position = position;
 }
 
 CPlane::~CPlane()
 {
-	delete worldBuffer;
-	delete colorBuffer;
+
 }
 
 void CPlane::Update()
@@ -38,11 +27,7 @@ void CPlane::Update()
 	//rotation.z = atan2(direction.y, direction.x);
 
 	if (KEY_DOWN(VK_LBUTTON)) {
-		missiles.emplace_back(new CMissile(Float2(position.x, position.y), Float2(50, 20), Float4(1, 1, 1, 1), direction, rotation.z));
-	}
-
-	for (int i = 0; i < missiles.size(); i++) {
-		missiles[i]->Update();
+		Fire();
 	}
 
 	UpdateWorld();
@@ -50,17 +35,16 @@ void CPlane::Update()
 
 void CPlane::Render()
 {
-	texture->Set();
+	CQuad::Render();
+}
 
-	worldBuffer->Set(matrix);
-	worldBuffer->SetVS(0);
-
-	colorBuffer->SetPS(0);
-
-	rect->Render();
-
-	for (int i = 0; i < missiles.size(); i++) {
-		missiles[i]->Render();
+void CPlane::Fire() {
+	
+	for (auto missile : missiles) {
+		if (!missile->GetActive()) {
+			
+		}
 	}
+	missiles.emplace_back(new CMissile(Float2(position.x, position.y), Float2(50, 20), Float4(1, 1, 1, 1), direction, rotation.z));
 
 }

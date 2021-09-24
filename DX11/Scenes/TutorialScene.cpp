@@ -23,9 +23,6 @@ CTutorialScene::CTutorialScene()
     vb = new CVertexBuffer((void*)vertices.data(), sizeof(Vertex), vertices.size());
     */
 
-    rect = new CRect(Float2(0, 0), Float2(50, 100));
-    rect2 = new CRect(Float2(0, 0), Float2(100, 50));
-
     world = new CMatrixBuffer();
 
     worldMatrix._11 = 1;
@@ -46,9 +43,6 @@ CTutorialScene::CTutorialScene()
 
 CTutorialScene::~CTutorialScene()
 {
-    delete rect;
-    delete rect2;
-
     delete world;
 }
 
@@ -78,16 +72,5 @@ void CTutorialScene::Update()
 
 void CTutorialScene::Render()
 {
-    Matrix temp = XMLoadFloat4x4(&worldMatrix);
-    world->Set(temp);
 
-    world->SetVS(0);
-
-    rect->Render();
-
-    temp = XMLoadFloat4x4(&worldMatrix2);
-    world->Set(temp);
-    world->SetVS(0);
-
-    rect2->Render();
 }

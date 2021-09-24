@@ -33,9 +33,9 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 #include "../DirectXTex/DirectXTex.h"
-#include "../IMGUI/imgui.h"
-#include "../IMGUI/imgui_impl_dx11.h"
-#include "../IMGUI/imgui_impl_win32.h"
+//#include "../IMGUI/imgui.h"
+//#include "../IMGUI/imgui_impl_dx11.h"
+//#include "../IMGUI/imgui_impl_win32.h"
 
 //FrameWork Header Files
 

@@ -2,6 +2,7 @@
 
 class CPlaneScene : public CScene {
 private:
+	CPlane* plane;
 
 public:
 	CPlaneScene();

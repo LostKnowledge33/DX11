@@ -3,9 +3,6 @@
 class CTutorialScene : public CScene
 {
 private:
-	CRect* rect;
-	CRect* rect2;
-
 	CMatrixBuffer* world;
 
 	XMFLOAT4X4 worldMatrix;

@@ -12,8 +12,8 @@ CProgram::CProgram()
 	//scene = new CTutorialScene();
 	//scene = new CSRTScene();
 	//scene = new CSolarSystemScene();
-	scene = new CTextureScene();
-	//scene = new CPlaneScene();
+	//scene = new CTextureScene();
+	scene = new CPlaneScene();
 }
 
 CProgram::~CProgram()

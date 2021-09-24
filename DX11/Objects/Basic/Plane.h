@@ -1,21 +1,17 @@
 #pragma once
 
-class CPlane : public CTransform {
+class CPlane : public CQuad {
 private:
-	CTexture* texture;
-	CRect* rect;
-
-	CMatrixBuffer* worldBuffer;
-	CColorBuffer* colorBuffer;
-
 	vector<CMissile*> missiles;
 
 	float speed = 100.f;
 
 public:
-	CPlane(Float2 position, Float4 color);
+	CPlane(Float2 position, Vector2 scale);
 	~CPlane();
 
 	void Update();
 	void Render();
+
+	void Fire();
 };

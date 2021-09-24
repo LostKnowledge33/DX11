@@ -2,8 +2,6 @@
 
 class CSRTScene : public CScene {
 private:
-	CRect* rect;
-
 	CMatrixBuffer* worldBuffer;
 	Matrix world;
 	Matrix world2;

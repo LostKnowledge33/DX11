@@ -1,19 +1,19 @@
 #pragma once
 
-class CMissile : public CTransform {
+class CMissile : public CQuad {
 private:
-	CTexture* texture;
-	CRect* rect;
-
-	CMatrixBuffer* worldBuffer;
-	CColorBuffer* colorBuffer;
-
 	Vector2 direction;
 
+	bool isActive;
+
 public:
-	CMissile(Float2 position, Float2 scale, Float4 color, Vector2 direction, float angle);
+	CMissile(Float2 position, Vector2 scale);
 	~CMissile();
 
 	void Update();
 	void Render();
+
+	bool GetActive() { return isActive; }
+	void SetActive(bool active) { isActive = active; }
+
 };

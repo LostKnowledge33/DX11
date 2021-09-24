@@ -4,8 +4,6 @@
 CSRTScene::CSRTScene() 
 	:position(0, 0), scale(1, 1), angle(0), angle2(0), pivot(50, 50)
 {
-	rect = new CRect(Float2(50, 50), Float2(100, 100));
-
 	worldBuffer = new CMatrixBuffer();
 
 	world = XMMatrixIdentity();
@@ -14,8 +12,6 @@ CSRTScene::CSRTScene()
 
 CSRTScene::~CSRTScene()
 {
-	delete rect;
-	
 	delete worldBuffer;
 }
 
@@ -62,7 +58,6 @@ void CSRTScene::Render()
 {
 	worldBuffer->Set(world);
 	worldBuffer->SetVS(0);
-	rect->Render();
 
 	//worldBuffer->Set(world2);
 	//worldBuffer->SetVS(0);

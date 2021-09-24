@@ -11,13 +11,13 @@ protected:
 	CVertexBuffer* vb;
 	CIndexBuffer* ib;
 
-	CTexture* texture;
-
 	CMatrixBuffer* worldBuffer;
 	CColorBuffer* colorBuffer;
 
+	CTexture* texture;
+
 public:
-	CQuad(wstring file);
+	CQuad(wstring file, Vector2 size);
 	virtual ~CQuad();
 
 	void Render();
